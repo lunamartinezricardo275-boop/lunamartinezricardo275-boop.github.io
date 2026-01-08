@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Night Barber</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #000;
+  color: #f5e58a;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* 🌕 LUNA */
+.luna {
+  position: fixed;
+  top: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #f5e58a 0%, #c9b24a 40%, transparent 70%);
+  opacity: .25;
+  border-radius: 50%;
+  animation: moverLuna 12s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes moverLuna {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(40px); }
+  100% { transform: translateY(0); }
+}
+
+.contenido {
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  margin-top: 40px;
+  font-size: 3em;
+  letter-spacing: 5px;
+  animation: float 3s ease-in-out infinite;
+}
+
+p {
+  max-width: 90%;
+  margin: auto;
+  color: #ddd;
+  font-size: 1em;
+}
+
+.descripcion {
+  margin-top: 15px;
+  font-style: italic;
+  color: #f5e58a;
+}
+
+.servicios {
+  margin-top: 40px;
+}
+
+.card {
+  background: #111;
+  margin: 15px auto;
+  padding: 18px;
+  width: 85%;
+  max-width: 400px;
+  border-radius: 18px;
+  box-shadow: 0 0 20px rgba(245,229,138,.2);
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 30px rgba(245,229,138,.6);
+}
+
+.card h3 {
+  margin: 0;
+  color: #f5e58a;
+}
+
+.card span {
+  color: #aaa;
+}
+
+footer {
+  margin: 40px 0;
+  font-size: .9em;
+  color: #777;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.fade-out {
+  animation: clickAnim .35s ease forwards;
+}
+
+@keyframes clickAnim {
+  to { transform: scale(.95); opacity: .7; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="luna"></div>
+
+<div class="contenido">
+
+<h1>NIGHT BARBER</h1>
+
+<p>
+Toca el servicio que quieras.<br>
+Al momento de picar, se genera tu cita automáticamente por WhatsApp.
+</p>
+
+<p class="descripcion">
+Cortes limpios, estilo nocturno y respeto en cada detalle.
+</p>
+
+<div class="servicios">
+  <div class="card" onclick="agendar('Corte Clásico', this)">
+    <h3>Corte Clásico</h3>
+    <span>$120</span>
+  </div>
+
+  <div class="card" onclick="agendar('Fade / Degradado', this)">
+    <h3>Fade / Degradado</h3>
+    <span>$150</span>
+  </div>
+
+  <div class="card" onclick="agendar('Corte + Barba', this)">
+    <h3>Corte + Barba</h3>
+    <span>$180</span>
+  </div>
+
+  <div class="card" onclick="agendar('Barba', this)">
+    <h3>Barba</h3>
+    <span>$80</span>
+  </div>
+</div>
+
+<footer>
+Lunes a Sábado · 11:00 am – 9:00 pm<br>
+
+</footer>
+
+</div>
+
+<!-- 🔊 SONIDO -->
+<audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+
+<script>
+function agendar(servicio, card) {
+  const sonido = document.getElementById("clickSound");
+  sonido.currentTime = 0;
+  sonido.play();
+
+  card.classList.add('fade-out');
+
+  setTimeout(() => {
+    const numero = "55 1337 4191"; // ← TU WHATSAPP
+    const mensaje = `Hola, quiero agendar un ${servicio} en Night Barber.`;
+    window.location.href =
+      `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+  }, 400);
+}
+</script>
+
+</body>
+</html>
